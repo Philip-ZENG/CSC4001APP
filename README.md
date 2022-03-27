@@ -160,5 +160,12 @@ The only extra package used is
 ### About the version control
 
 - For every commit, commit to a new sub-branch other than the main branch
+
 - Conduct merge action from the github website
+
 - Use `.gitignore` file to exclude all the packages, and to avoid version conflicts
+
+  - ```
+    git checkout -b my_new_branch
+    git commit
+    ```
