@@ -5,7 +5,19 @@
 ### Project directory specification
 
 - Node.js Express Server: `/server`
+  - Server: `server/index.js`
+
 - Vue.js Client: `/client`
+  - Home page: `client/src/views/HomeView.vue`
+  - Activity creation page: `client/src/views/ActivityCreationView.vue`
+  - Login page: `client/src/views/LoginView.vue`
+  - Register page: `client/src/views/PersonalInfoView.vue`
+  - Personal info page: `client/src/views/PersonalInfoView.vue`
+  - Setting page: `client/src/views/SettingView.vue`
+  - Activity list page: `client/src/views/ActivityListView.vue`
+  - Activity Management page: `client/src/views/ActivityManagementView.vue`
+  - Notification page: `client/src/views/NotificationView.vue`
+
 
 
 
