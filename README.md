@@ -6,7 +6,6 @@
 
 - Node.js Express Server: `/server`
   - Server: `server/index.js`
-
 - Vue.js Client: `/client`
   - Home page: `client/src/views/HomeView.vue`
   - Activity creation page: `client/src/views/ActivityCreationView.vue`
@@ -17,7 +16,9 @@
   - Activity list page: `client/src/views/ActivityListView.vue`
   - Activity Management page: `client/src/views/ActivityManagementView.vue`
   - Notification page: `client/src/views/NotificationView.vue`
-
+- Database: `/database`
+  - Database creatinon: `database/DatabaseCreation.sql`
+  - Testing data creation: `database/TestingData.sql`
 
 
 
@@ -71,34 +72,34 @@
 
   Attributes are list below; Constrains are listed after the attribute
 
-- First Rank
+- Implemented table
 
-  - Activity-User
-    - Activity-id (Primary-Key)
-    - User-id (Foreign Key)
-    - Role: initiator/participants
-  - User
-    - User-id (Primary Key)
-    - Email (Unique)
-    - Password
-    - User Name
-    - Gender
-    - My portrait: Select from given range
-    - Phone Number
-    - Bio: a sentence to describe yourself
-  - Activity
-    - Activity-id (Primary Key)
-    - Title
-    - Activity Time (Time & Date)
-    - Activity Location
-    - Description
-    - Activity Picture
-    - Current Number of participants
-    - Maximum Number of participants
-    - Activity type: Given range
-    - Heat Score: Number of visits
+  - Database: pickup
+  - Table Name: activity_user
+    - activity_id
+    - user_id
+    - role
+  - Table Name: user_info
+    - user_id
+    - email
+    - password
+    - user_name
+    - gender
+    - contact_info
+    - personal_intro
+    - My portrait: Select from given range (NOT IMPLEMENTED)
+  - Table Name: activity_info
+    - activity_id
+    - title
+    - time
+    - location
+    - description
+    - max_capacity
+    - quota_left
+    - type
+    - heat
 
-- Second Rank
+- Table to implement
 
   - Following
     - Follower-id
