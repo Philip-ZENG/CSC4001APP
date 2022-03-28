@@ -23,15 +23,21 @@
 
 
 
-### Environment Setup
+### Development Stack & Environment Setup
 
-- Node.js
+- JavaScript Runtime Environment: Node.js
   - Version: v14.18.0
-- Vue.js 
+- Front-end Framework: Vue.js 
   - Version: v3.2.13
+- Front-end UI Component Library: Boostrap
+  - Version: v5.02
 
-- MySQL
+- Back-end Framework: Express.js
+  - Version: v4.17.3
+
+- Database: MySQL
   - Version: v8.0.27 
+  - Cloud Deployment: Amazon Web Service Remote Database System
 
 
 
@@ -70,7 +76,7 @@
 
 ### Implication Specification
 
-#### Database Specification (焯儒)
+#### Database Specification
 
 Attributes are list below; Constrains are listed after the attribute
 
@@ -143,7 +149,7 @@ Attributes are list below; Constrains are listed after the attribute
     - Create Time (Ascending/Descending)
     - Need the least member to join
     - Heat
-  - Notification （焯儒）
+  - Notification (焯儒)
     - Auto notify participants
     - Inform the participants 0.5 hour ahead
 
@@ -284,6 +290,24 @@ The only extra package used is
     ```shell
     npm install axios --save
     ```
+
+- Boostrap 5
+
+  - UI Component library
+
+  - Website
+
+    ```
+    https://getbootstrap.com/
+    ```
+
+  - Install library
+
+    ```shell
+    npm install bootstrap --save
+    ```
+
+    
 
 
 
