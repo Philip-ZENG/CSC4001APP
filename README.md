@@ -19,6 +19,7 @@
 - Database: `/database`
   - Database creatinon: `database/DatabaseCreation.sql`
   - Testing data creation: `database/TestingData.sql`
+  - Fake data generation: `database/RandomDataGeneration`
 
 
 
@@ -45,7 +46,7 @@
 
     - https://console.aws.amazon.com
 
-  - AWS ADMIN ccount
+  - AWS ADMIN Account
 
     - ID: 888747168322
     - User Name: philip-admin
@@ -54,11 +55,12 @@
   - AWS RDS "database-2 North Virginia", mySQL account
 
     - ```
+      HOST: database-2.c0pbv8ca91j5.us-east-1.rds.amazonaws.com
       username: admin
       password: qweasdzxc
       ```
   
-  - Login From terminal
+  - Login to AWS RDS From terminal
   
     - ```shell
       mysql --host=database-2.c0pbv8ca91j5.us-east-1.rds.amazonaws.com --user=admin --password=qweasdzxc
@@ -68,36 +70,36 @@
 
 ### Implication Specification
 
-- Database specification (焯儒)
+#### Database Specification (焯儒)
 
-  Attributes are list below; Constrains are listed after the attribute
+Attributes are list below; Constrains are listed after the attribute
 
 - Implemented table
 
   - Database: pickup
   - Table Name: activity_user
-    - activity_id
-    - user_id
-    - role
+    - activity_id: `INT`, `NOT NULL`, `FOREIGN KEY`
+    - user_id: `INT`, `NOT NULL`, `FOREIGN KEY`
+    - role: `VARCHAR(20)`, `NOT NULL`, value can only be one of the two`[MANAGER, MEMBER]`
   - Table Name: user_info
-    - user_id
-    - email
-    - password
-    - user_name
-    - gender
-    - contact_info
-    - personal_intro
+    - user_id: `INT`, `AUTO_INCREMENT`, `PRIMARY KEY`, `NOT NULL`
+    - email: `VARCHAR(255)`, `UNIQUE`, `NOT NULL`
+    - password: `VARCHAR(255)`, `NOT NULL`
+    - user_name: `VARCHAR(255)`, `NOT NULL`
+    - gender: `VARCHAR(20)`, value can only be one of the two `[MALE,FEMALE]`
+    - contact_info: `VARCHAR(20)`
+    - personal_intro: `VARCHAR(255)`
     - My portrait: Select from given range (NOT IMPLEMENTED)
   - Table Name: activity_info
-    - activity_id
-    - title
-    - time
-    - location
-    - description
-    - max_capacity
-    - quota_left
-    - type
-    - heat
+    - activity_id: `INT`, `AUTO INCREMENT`, `PRIMARY KEY`, `NOT NULL`
+    - title: `VARCHAR(255)`, `NOT NULL`
+    - time: `DATETIME`, `NOT NULL`
+    - location: `VARCHAR(255)`
+    - description: `VARCHAR(255)`
+    - max_capacity: `INT`, `NOT NULL`
+    - quota_left: `INT`
+    - type:`VARCHAR(255)`, `NOT NULL`, value can only be one of the five `[Sports,Meals,Travel,GroupShopping,Carpool]`
+    - heat: `INT`
 
 - Table to implement
 
@@ -112,7 +114,15 @@
     - User-id
     - Activity-id: list of viewed activity
 
-- Functional
+- Fake data generation
+
+  - Use `faker` package
+  - Code can be see in `database\RandomDataGenerator`
+
+  
+
+  #### Functions Specification
+
   - User register/ User login (骆锴)
   - User information editing (骆锴)
     - Change email
@@ -137,7 +147,10 @@
     - Auto notify participants
     - Inform the participants 0.5 hour ahead
 
-- Page
+  
+
+  #### Page Specification
+
   - Main Page (博一)
     - Display and searching
     - Activity Creation
@@ -170,7 +183,15 @@
     npm run serve
     ```
 
+- Generate Fake data and insert into database
 
+  - Run the following under the `/database/RandomDataGenerator` directory for the three files: `user_info.js`, `activity_info.js`, `activity_user.js`
+
+    ```shell
+    node file_name.js
+    ```
+
+    
 
 ### About the packages
 
@@ -303,3 +324,4 @@ The only extra package used is
 - For conflicting version
 
   - Try pulling from the repository before pushing
+
