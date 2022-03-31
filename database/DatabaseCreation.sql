@@ -28,9 +28,9 @@ CREATE TABLE user_info
 
 CREATE TABLE activity_info
 (
-    activity_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL ,
-    title VARCHAR(255) NOT NULL ,
-    time DATETIME NOT NULL ,
+    activity_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    time DATETIME NOT NULL,
     location VARCHAR(255),
     description VARCHAR(255),
     max_capacity INT NOT NULL ,

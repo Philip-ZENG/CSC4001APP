@@ -25,12 +25,19 @@
 
 ### Development Stack & Environment Setup
 
+- Graphical Demonstration
+
+  ![](D:\MySQL\pickup\report\vue-node-express-mysql-architecture.png)
+
 - JavaScript Runtime Environment: Node.js
+  
   - Version: v14.18.0
+  
 - Front-end Framework: Vue.js 
   - Version: v3.2.13
+  
 - Front-end UI Component Library: Boostrap
-  - Version: v5.02
+  - Version: v5.1.3
 
 - Back-end Framework: Express.js
   - Version: v4.17.3
@@ -127,46 +134,50 @@ Attributes are list below; Constrains are listed after the attribute
 
   
 
-  #### Functions Specification
 
-  - User register/ User login (骆锴)
-  - User information editing (骆锴)
-    - Change email
-    - Change password
-  - Email Verification (骆锴)
-    - Send verification code to user email and server
-    - Verify the two code
-    - Expire within 60 seconds
-    - After verification succeed, store user account info into the database
-  - Create Activity (博一)
-    - Time: minimum time unit every 15/30 minutes
-  - Activity Management (焯儒）
-    - Edit existing activity information
-    - Add/delete participants
-    - Change manager: initiator is the default manager
-  - Activity Search (博一)
-    - Given tag
-    - Create Time (Ascending/Descending)
-    - Need the least member to join
-    - Heat
-  - Notification (焯儒)
-    - Auto notify participants
-    - Inform the participants 0.5 hour ahead
+#### Functions Specification
 
-  
+- User register/ User login (骆锴)
+- User information editing (骆锴)
+  - Change email
+  - Change password
+- Email Verification (骆锴)
+  - Send verification code to user email and server
+  - Verify the two code
+  - Expire within 60 seconds
+  - After verification succeed, store user account info into the database
+- Create Activity (博一)
+  - Time: minimum time unit every 15/30 minutes
+- Activity Management (焯儒）
+  - Edit existing activity information
+  - Add/delete participants
+  - Change manager: initiator is the default manager
+- Activity Search (博一)
+  - Given tag
+  - Create Time (Ascending/Descending)
+  - Need the least member to join
+  - Heat
+- Notification (焯儒)
+  - Auto notify participants
+  - Inform the participants 0.5 hour ahead
+- User data isolation
+  - Each user can only see his/her own personal data
 
-  #### Page Specification
 
-  - Main Page (博一)
-    - Display and searching
-    - Activity Creation
-  - Login Page (骆锴)
-  - Personal Information (骆锴)
-  - Activity Management (焯儒)
-    - Activity Creation
-    - Management
-  - Notification (焯儒)
-  - Navigation Bar (焯儒)
+
+
+#### Page Specification
+
+- Main Page (博一)
+  - Display and searching
+  - Activity Creation
+- Login Page (骆锴)
+- Personal Information (骆锴)
+- Activity Management (焯儒)
+  - Activity Creation
+  - Management
+- Notification (焯儒)
+- Navigation Bar (焯儒)
 
 
 
@@ -307,7 +318,13 @@ The only extra package used is
     npm install bootstrap --save
     ```
 
-    
+
+
+
+### Testing
+
+- API testing tool
+  - Postman (Can initiate post and get request)
 
 
 
@@ -349,3 +366,22 @@ The only extra package used is
 
   - Try pulling from the repository before pushing
 
+
+
+#### Learning Highlight
+
+- JavaScript Asynchronous function
+  - Callback
+  - Promise
+  - async\await
+- DOM API
+  - Insertion of vue components into the page
+- Vue component
+  - Reusable vue function block
+  - Creation of vue component instance
+- Scope of `this` in vue
+  - In arrow function and normal function, `this` has different reference
+    - In arrow function, `this` point to the JS context
+    - In normal function, `this` refer to vue instance
+  - In Promises, `this` does not refer to vue instance
+    - Define `const that=this;` before entering a promise and use `that` inside promise, can solve this reference error
