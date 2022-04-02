@@ -58,13 +58,13 @@
 </template>
 
 <script>
-import { swiper, swiperSlide } from 'vue-awesome-swiper';
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import Datepicker from 'vuejs3-datepicker';
 
 export default {
   components: {
-    swiper,
-    swiperSlide,
+    Swiper,
+    SwiperSlide,
     Datepicker,
   },
 
