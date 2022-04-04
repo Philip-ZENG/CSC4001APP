@@ -23,6 +23,13 @@ connection.connect(function (err) {
   if (err) throw err;
 });
 
+/**
+ * @description
+ * Get the list of activity_id of a user with given user_id
+ * @param {*} callback 
+ * Pass the activity_id list to next function
+ * Callback is used to make sure data reading finishes before passing
+ */
 function get_activity_list(user_id,callback){
     connection.query({
     sql: 'SELECT * FROM `activity_user` WHERE `user_id` = ?',
@@ -36,6 +43,12 @@ function get_activity_list(user_id,callback){
   });
 }
 
+/**
+ * @description
+ * Extract all the information of an activity with a given activity_id
+ * @param {*} callback 
+ * Callback is used to make sure data reading finishes before passing data
+ */
 function get_activity_info(activity_id,callback) {
   connection.query({
     sql: 'SELECT * FROM `activity_info` WHERE `activity_id` = ?',
@@ -45,8 +58,15 @@ function get_activity_info(activity_id,callback) {
   });
 }
 
+/**
+ * @description
+ * Pack all the activity info of a user into an array
+ * @returns 
+ * Return the activity info in a packed array
+ */
 async function pack_activity_info(user_id){
   
+  // Get the list of activity_id
   var myPromise1 = function(user_id){
     return new Promise(function(resolve){
       get_activity_list(user_id,(result)=>{
@@ -55,7 +75,7 @@ async function pack_activity_info(user_id){
     })
   }
 
-  // Hode the process that takes time in a promise (get_activity_info())
+  // Get all the information of activities of a uer
   var myPromise2 = function(activity_id){
     return new Promise(function(resolve) {
       get_activity_info(activity_id,(data)=>{
@@ -64,14 +84,14 @@ async function pack_activity_info(user_id){
     })
   }
   
-  // response is the list containing all activity information pack
+  // Response is the list containing all activity information pack
   var response = [];
 
-  // get activity list from Promise1
+  // Get activity list from Promise1
   const activity_id_list = await myPromise1(user_id);
   response.push(activity_id_list);
 
-  // Get data from Promise 2
+  // Get activity data from Promise 2
   var activity_data = []; 
   for(var i = 0; i < activity_id_list.length; i++){
     const activityInfo = await myPromise2(activity_id_list[i]);
@@ -82,7 +102,10 @@ async function pack_activity_info(user_id){
   return response;
 };
 
-
+/**
+ * @description
+ * Return activity info of a specific user to whom make the request
+ */
 app.post("/getActivityInfo", function (req, res) {
 
   pack_activity_info(req.body.user_id)
@@ -93,20 +116,6 @@ app.post("/getActivityInfo", function (req, res) {
       console.log("error")
     });
 });
-
-
-
-// Pass Activity Info with specific activity_id
-app.get("/getActivityInfo", function (req, res) {
-    // Find count of user in DB
-    var q = "SELECT * FROM activity_info";
-    connection.query(q, function (err, result) {
-      if (err) throw err;
-
-      res.json(result);
-
-    });
-  });
 
 const port = process.env.PORT || 4000;
 
