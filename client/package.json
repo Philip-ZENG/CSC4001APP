@@ -42,9 +42,7 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {
-      "double" : "double"
-    }
+    "rules": {}
   },
   "browserslist": [
     "> 1%",
