@@ -1,7 +1,7 @@
 <template>
   <div class="actCard">
     <div class = "firstRow">
-      <div class="profileOuter"><img class="profile" alt=" " src="../../public/male.png"/></div>
+      <div class="profileOuter"><img class="profile" alt=" " src="../../../public/male.png"/></div>
       <div class="titlePlace"> {{title}}</div>
       <div class="datePlace"> {{time}}</div>
     </div>
@@ -40,7 +40,7 @@ export default {
 }
 
 .secondRow{
-  height: 40px; width: 275px;
+  height: 50px; width: 275px;
   overflow: hidden;
 }
 

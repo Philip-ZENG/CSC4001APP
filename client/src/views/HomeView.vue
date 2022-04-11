@@ -1,77 +1,94 @@
 <template>
   <div class="home">
     <table class="showTable" cellspacing="0" cellpadding="0" align="center">
-      <tr height="100px">
+      <tr height="100px"> <!--first row-->
         <td id="swip" align="center" colspan="3" border="1">
-          <swiper options="swiperOption" class = 'swiper-box'>
-            <swiper-slide height="50" align="center">
-              <div >content</div>
-            </swiper-slide>
-          </swiper>
+          <span>{{dateinput}}</span>
         </td>
         <td id="create" align="center">
           <button id = "createNew" @click="switchTo('/activityCreation')">
           + Post a new event</button>
         </td>
       </tr>
-      <tr height="50">
-        <td align="center" width="30%">
+      <tr height="50"> <!--second row-->
+        <td align="center" width="30%"> <!--search bar-->
           <select v-model="searchType">
             <option value="type">type</option>
             <option value="title">title</option>
           </select>
-          <input v-model="userInput"><span>{{userInput}}</span>
+          <input v-model="userInput">
           <button @click="searchActivity">search</button>
         </td>
-        <td align="center" width="20%">
+        <td align="center" width="20%"> <!--order bar-->
           <div class="rightSep" id="order-select">
             <select v-model="searchOrder">
-            <option disabled value="">Please select one</option>
-            <option>Most Recent</option>
-            <option>Almost Full</option>
-            <option>Most Popular</option>
-          </select>
+              <option disabled value="">Please select one</option>
+              <option>Most Recent</option>
+              <option>Almost Full</option>
+              <option>Most Popular</option>
+            </select>
           <button>Sort</button>
           </div>
         </td>
-        <td align="center" width="20%">
+        <td align="center" width="20%"> <!--date bar-->
           <div class="rightSep">
-            <datepicker>
-            </datepicker>
+            <datepicker v-model="dateinput"></datepicker>
+            <button @click="searchByDate">search</button>
           </div>
         </td>
-        <td align="center" width="30%">number of member</td>
+        <td align="center" width="30%"> <!--number bar-->
+          <span>number of members: </span>
+          <input v-model="minNum" style="width:25px; height:25px" onkeyup="this.value=this.value.replace(/[^\d]/g,'')">
+          <span> - </span>
+          <input v-model="maxNum" style="width:25px; height:25px" onkeyup="this.value=this.value.replace(/[^\d]/g,'')">
+        </td>
       </tr>
     </table>
 
     <div class="actSquare">
       <dl>
-        <dt v-for="(act, index) in actInformation.slice(page*12,page*12+12)" :key="index">
+        <dt v-for="(act, index) in shownActivity" :key="index">
           <activity-card :time="act.time" :title="act.title" :description="act.description">
           </activity-card>
         </dt>
       </dl>
       <div class="pageList">
-        <div class="pageIndex">1</div>
-        <div class="pageIndex">{{numOfPages}}</div>
+        <button @click="page -= 1" :disabled="page == 1">previous</button>
+        <span style="margin-left:10px; margin-right:10px"> {{page}} </span>
+        <button @click="page += 1" :disabled="page == numOfPages">next</button>
+        <span> go to: </span>
+        <select v-model="userPage">
+          <option v-for="p in numOfPages" :key="p" :disabled="p == page">{{p}}</option>
+        </select>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import Datepicker from 'vuejs3-datepicker';
-import ActivityCard from '../components/ActivityCard.vue';
+import ActivityCard from '../components/Home/ActivityCard.vue';
 
 const axios = require('axios').default;
 
 export default {
   components: {
-    Swiper,
-    SwiperSlide,
     Datepicker,
     'activity-card': ActivityCard,
+  },
+
+  data() {
+    return {
+      searchOrder: '',
+      searchType: 'type',
+      actInformation: [], // store the activity information
+      page: 1, // store the page number
+      userInput: '', // store the user's input for searching
+      userPage: null, // the page number user want to view
+      dateinput: new Date(),
+      minNum: null,
+      maxNum: null,
+    };
   },
 
   computed: {
@@ -87,16 +104,26 @@ export default {
       }
       return temp + 1;
     },
+
+    shownActivity() {
+      const res = [];
+      if (this.page * 12 > this.actInformation.length) {
+        for (let i = (this.page - 1) * 12; i < this.actInformation.length; i += 1) {
+          res.push(this.actInformation[i]);
+        }
+      } else {
+        for (let i = 0; i < 12; i += 1) {
+          res.push(this.actInformation[(this.page - 1) * 12 + i]);
+        }
+      }
+      return res;
+    },
   },
 
-  data() {
-    return {
-      searchOrder: '',
-      searchType: 'type',
-      actInformation: [],
-      page: 0,
-      userInput: '',
-    };
+  watch: {
+    userPage() {
+      this.page = Number(this.userPage);
+    },
   },
 
   methods: {
@@ -111,7 +138,6 @@ export default {
       )
         .then((response) => {
           this.actInformation = response.data;
-          console.log(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -126,6 +152,38 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    searchByDate() {
+      axios.post(
+        'http://localhost:4000/searchByDate',
+        { dateinput: this.dateToString(this.dateinput) },
+      )
+        .then((response) => {
+          this.actInformation = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    dateToString(date) {
+      const year = date.getFullYear();
+      let month = (date.getMonth() + 1).toString();
+      let day = (date.getDate()).toString();
+      let dateTime = '';
+      if (month.length === 1) {
+        month = '0' + month;
+      }
+      if (day.length === 1) {
+        day = '0' + day;
+      }
+      dateTime = year + '-' + month + '-' + day;
+      return dateTime;
+    },
+
+    printOut(a) {
+      console.log(a);
     },
   },
 
@@ -153,6 +211,7 @@ export default {
 }
 
 .rightSep{
+  width: 350px;
   margin: 5px;
   border-style: solid; border-width: 0px 1px 0px 0px;
 }
@@ -171,14 +230,6 @@ export default {
   position: fixed; bottom: 0%;
   width: 100%; height: 5%;
   background-color: white;
-}
-
-.pageIndex{
-  float: left;
-  width: 30px; height: 30px;
-  border-style: solid; border-width: 1px; border-radius: 5px;
-  text-align: center;
-  color: slateblue;
 }
 
 </style>

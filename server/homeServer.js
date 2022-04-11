@@ -23,14 +23,6 @@ connection.connect(function (err) {
   if (err) throw err;
 });
 
-function getAllActivity(callback){
-  connection.query({
-    sql: 'SELECT * FROM `activity_info`',
-    }, function (err, results) {
-      return callback(results[0]);
-    });
-}
-
 app.post("/getActivityInfo", function (req, res) {
   var q = "SELECT * FROM activity_info";
   connection.query(q, function (err, result) {
@@ -40,16 +32,47 @@ app.post("/getActivityInfo", function (req, res) {
 });
 
 app.post("/searchActivity", function(req, res){
-  var q = "SELECT * FROM activity_info where " + req.body.searchType + " = ?";
+  var q = "SELECT * FROM activity_info WHERE " + req.body.searchType + " = ?";
+  console.log(req.body.userInput);
   connection.query({
     sql: q,
     values: [req.body.userInput]
   }, function(err, result){
       if (err) throw err;
       res.json(result);
-    }
-  );
+  });
 });
+
+app.post("/searchByDate", function(req, res){
+  var q = "SELECT * FROM activity_info where date(time) = ?;";
+  connection.query({
+    sql: q,
+    values: [req.body.dateinput]
+  }, function(err, result){
+    if (err) throw err;
+    res.json(result);
+  });
+})
+
+app.post("/postActivity", function(req, res){
+  var q1 = "SELECT COUNT(*) FROM activity_info;";
+  var id = 1;
+  connection.query(q1, function(err, result){
+    if (err) throw err;
+    id += Number(result[0]["COUNT(*)"]);
+    console.log(id);
+  });
+  var q2 = "INSERT INTO activity_info VALUES (?," + req.body.title + "," + req.body.time + "," 
+  + req.body.location + "," + req.body.description + ",?,?," + req.body.type + ")";
+  console.log(q2);
+  // connection.query({
+  //   sql: q2,
+  //   values: [id,, req.body.number, req.body.number-1],
+  // }, function(err, result){
+  //   if (err) throw err;
+  //   res.json(result);
+  // })
+})
 
 const port = process.env.PORT || 4000;
 
