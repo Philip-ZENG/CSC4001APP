@@ -26,35 +26,14 @@ export default {
   data() {
     return {
       user_id: 8,
+      ACTIVITY_ID_LIST: [], // The list of activity id of a user
+      ACTIVITY_DATA: [], // Stores all the activity information of a user
     };
   },
   provide() {
     return {
-      ACTIVITY_ID_LIST: null, // The list of activity id of a user
-      ACTIVITY_DATA: [
-        {
-          activity_id: 1,
-          title: 'a',
-          time: '2021-08-09T21:00:20.000Z',
-          location: 'San Jose',
-          description: 'migration green Coves',
-          max_capacity: 7,
-          quota_left: 3,
-          type: 'GroupShoping',
-          heat: 88,
-        },
-        {
-          activity_id: 4,
-          title: 'd',
-          time: '2021-04-29T12:46:20.000Z',
-          location: 'Tustin',
-          description: 'Checking Arkansas quantifying',
-          max_capacity: 7,
-          quota_left: 2,
-          type: 'Travel',
-          heat: 72,
-        },
-      ], // Stores all the activity information of a user
+      activityIdList: this.ACTIVITY_ID_LIST,
+      activityData: this.ACTIVITY_DATA,
     };
   },
   methods: {
@@ -72,7 +51,12 @@ export default {
         .then((response) => {
           const ID_LIST_INDEX = 0;
           const DATA_INDEX = 1;
-          this.ACTIVITY_DATA = response.data[DATA_INDEX];
+          for (let i = 0; i < response.data[DATA_INDEX].length; i += 1) {
+            this.ACTIVITY_DATA.push(response.data[DATA_INDEX][i]);
+          }
+          for (let i = 0; i < response.data[ID_LIST_INDEX].length; i += 1) {
+            this.ACTIVITY_ID_LIST.push(response.data[ID_LIST_INDEX][i]);
+          }
           this.ACTIVITY_ID_LIST = response.data[ID_LIST_INDEX];
           return callback();
         });
