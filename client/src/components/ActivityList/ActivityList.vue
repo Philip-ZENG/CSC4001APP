@@ -2,7 +2,7 @@
   <section>
     <div>
       <activity-list-card
-        v-for="activity in ACTIVITY_DATA"
+        v-for="activity in activityData"
         :key="activity.activity_id"
         :activity_id="activity.activity_id"
         :title="activity.title"
@@ -20,6 +20,6 @@ export default {
   components: {
     'activity-list-card': ActivityListCard,
   },
-  inject: ['ACTIVITY_DATA'],
+  inject: ['activityData'],
 };
 </script>

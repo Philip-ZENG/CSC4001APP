@@ -21,6 +21,7 @@ var connection = mysql.createConnection({
 // Connet to mysql
 connection.connect(function (err) {
   if (err) throw err;
+  console.log('mySQL server connection succeed.')
 });
 
 /**
@@ -54,6 +55,7 @@ function get_activity_info(activity_id,callback) {
     sql: 'SELECT * FROM `activity_info` WHERE `activity_id` = ?',
     values: [activity_id]
   }, function (err, results) {
+    console.log(results[0]);
     return callback(results[0]);
   });
 }
@@ -61,7 +63,7 @@ function get_activity_info(activity_id,callback) {
 /**
  * @description
  * Pack all the activity info of a user into an array
- * @returns 
+ * @returns
  * Return the activity info in a packed array
  */
 async function pack_activity_info(user_id){
@@ -75,7 +77,7 @@ async function pack_activity_info(user_id){
     })
   }
 
-  // Get all the information of activities of a uer
+  // Get all the information of activities of a user
   var myPromise2 = function(activity_id){
     return new Promise(function(resolve) {
       get_activity_info(activity_id,(data)=>{

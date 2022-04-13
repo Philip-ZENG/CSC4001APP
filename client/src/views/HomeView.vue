@@ -1,25 +1,28 @@
 <template>
   <div class="home">
     <table class="showTable" cellspacing="0" cellpadding="0" align="center">
-      <tr height="100px"> <!--first row-->
+      <tr height="100px">
+        <!--first row-->
         <td id="swip" align="center" colspan="3" border="1">
-          <span>{{dateinput}}</span>
+          <span>{{ dateinput }}</span>
         </td>
         <td id="create" align="center">
-          <button id = "createNew" @click="switchTo('/activityCreation')">
-          + Post a new event</button>
+          <button id="createNew" @click="switchTo('/activityCreation')">+ Post a new event</button>
         </td>
       </tr>
-      <tr height="50"> <!--second row-->
-        <td align="center" width="30%"> <!--search bar-->
+      <tr height="50">
+        <!--second row-->
+        <td align="center" width="30%">
+          <!--search bar-->
           <select v-model="searchType">
             <option value="type">type</option>
             <option value="title">title</option>
           </select>
-          <input v-model="userInput">
+          <input v-model="userInput" />
           <button @click="searchActivity">search</button>
         </td>
-        <td align="center" width="20%"> <!--order bar-->
+        <td align="center" width="20%">
+          <!--order bar-->
           <div class="rightSep" id="order-select">
             <select v-model="searchOrder">
               <option disabled value="">Please select one</option>
@@ -27,20 +30,30 @@
               <option>Almost Full</option>
               <option>Most Popular</option>
             </select>
-          <button>Sort</button>
+            <button>Sort</button>
           </div>
         </td>
-        <td align="center" width="20%"> <!--date bar-->
+        <td align="center" width="20%">
+          <!--date bar-->
           <div class="rightSep">
             <datepicker v-model="dateinput"></datepicker>
             <button @click="searchByDate">search</button>
           </div>
         </td>
-        <td align="center" width="30%"> <!--number bar-->
+        <td align="center" width="30%">
+          <!--number bar-->
           <span>number of members: </span>
-          <input v-model="minNum" style="width:25px; height:25px" onkeyup="this.value=this.value.replace(/[^\d]/g,'')">
+          <input
+            v-model="minNum"
+            style="width: 25px; height: 25px"
+            onkeyup="this.value=this.value.replace(/[^\d]/g,'')"
+          />
           <span> - </span>
-          <input v-model="maxNum" style="width:25px; height:25px" onkeyup="this.value=this.value.replace(/[^\d]/g,'')">
+          <input
+            v-model="maxNum"
+            style="width: 25px; height: 25px"
+            onkeyup="this.value=this.value.replace(/[^\d]/g,'')"
+          />
         </td>
       </tr>
     </table>
@@ -54,11 +67,11 @@
       </dl>
       <div class="pageList">
         <button @click="page -= 1" :disabled="page == 1">previous</button>
-        <span style="margin-left:10px; margin-right:10px"> {{page}} </span>
+        <span style="margin-left: 10px; margin-right: 10px"> {{ page }} </span>
         <button @click="page += 1" :disabled="page == numOfPages">next</button>
         <span> go to: </span>
         <select v-model="userPage">
-          <option v-for="p in numOfPages" :key="p" :disabled="p == page">{{p}}</option>
+          <option v-for="p in numOfPages" :key="p" :disabled="p == page">{{ p }}</option>
         </select>
       </div>
     </div>
@@ -132,10 +145,11 @@ export default {
     },
 
     searchActivity() {
-      axios.post(
-        'http://localhost:4000/searchActivity',
-        { searchType: this.searchType, userInput: this.userInput },
-      )
+      axios
+        .post('http://localhost:4000/searchActivity', {
+          searchType: this.searchType,
+          userInput: this.userInput,
+        })
         .then((response) => {
           this.actInformation = response.data;
         })
@@ -145,7 +159,8 @@ export default {
     },
 
     askInfo() {
-      axios.post('http://localhost:4000/getActivityInfo')
+      axios
+        .post('http://localhost:4000/getActivityInfo')
         .then((response) => {
           this.actInformation = response.data;
         })
@@ -155,10 +170,10 @@ export default {
     },
 
     searchByDate() {
-      axios.post(
-        'http://localhost:4000/searchByDate',
-        { dateinput: this.dateToString(this.dateinput) },
-      )
+      axios
+        .post('http://localhost:4000/searchByDate', {
+          dateinput: this.dateToString(this.dateinput),
+        })
         .then((response) => {
           this.actInformation = response.data;
         })
@@ -170,14 +185,17 @@ export default {
     dateToString(date) {
       const year = date.getFullYear();
       let month = (date.getMonth() + 1).toString();
-      let day = (date.getDate()).toString();
+      let day = date.getDate().toString();
       let dateTime = '';
       if (month.length === 1) {
+        // eslint-disable-next-line
         month = '0' + month;
       }
       if (day.length === 1) {
+        // eslint-disable-next-line
         day = '0' + day;
       }
+      // eslint-disable-next-line
       dateTime = year + '-' + month + '-' + day;
       return dateTime;
     },
@@ -190,46 +208,54 @@ export default {
   mounted() {
     this.askInfo();
   },
-
 };
 </script>
 
 <style>
 #swip {
-  border-style: solid; border-width: 0px 1px 1px 0px;
+  border-style: solid;
+  border-width: 0px 1px 1px 0px;
 }
 
 #create {
-  border-style: solid; border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
 }
 
 #createNew {
-  text-align:center;
+  text-align: center;
   background-color: white;
   border-radius: 10px;
-  height:45px; width: 200px;
+  height: 45px;
+  width: 200px;
 }
 
-.rightSep{
+.rightSep {
   width: 350px;
   margin: 5px;
-  border-style: solid; border-width: 0px 1px 0px 0px;
+  border-style: solid;
+  border-width: 0px 1px 0px 0px;
 }
 
-.showTable{
+.showTable {
   width: 100%;
-  border-style: solid; border-width: 1px 0px 1px 0px; border-color: black;
+  border-style: solid;
+  border-width: 1px 0px 1px 0px;
+  border-color: black;
 }
 
-.actSquare{
-  padding-left: 4%; padding-right: 4%; padding-top: 1%;
+.actSquare {
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-top: 1%;
   align-content: center;
 }
 
-.pageList{
-  position: fixed; bottom: 0%;
-  width: 100%; height: 5%;
+.pageList {
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+  height: 5%;
   background-color: white;
 }
-
 </style>
