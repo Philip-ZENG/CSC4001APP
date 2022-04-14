@@ -11,7 +11,7 @@
         <h3>Remaining Quota</h3>
       </div>
       <div class="col">
-        <h3>Stauts</h3>
+        <h3>More Info</h3>
       </div>
     </div>
   </div>
