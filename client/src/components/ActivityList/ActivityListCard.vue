@@ -2,44 +2,22 @@
   <div class="card mt-2">
     <div class="row">
       <div class="col">
-        <h4>{{ title }}</h4>
+        <h5>{{ title }}</h5>
       </div>
       <div class="col">
-        <h4>{{ time }}</h4>
+        <h5>{{ time }}</h5>
       </div>
       <div class="col">
-        <h4>{{ quota_left }}</h4>
+        <h5>{{ quota_left }}</h5>
       </div>
       <div class="col">
-        <div class="dropdown">
-          <button
-            class="btn btn-success dropdown-toggle save_button"
-            type="button"
-            id="dropdownMenuButton"
-            data-bs-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            {{ state }}
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li>
-              <button
-                class="dropdown-item"
-                type="button"
-                href="http://localhost:8080/#/activityManagement"
-              >
-                Detail
-              </button>
-            </li>
-            <li>
-              <button class="dropdown-item" type="button" @click="toggleState">{{ action }}</button>
-            </li>
-            <li>
-              <button class="dropdown-item" type="button" @click="deleteActivity">Delete</button>
-            </li>
-          </div>
-        </div>
+        <button
+          class="btn btn-primary"
+          type="button"
+          @click="toActivityManagement"
+        >
+          Detail
+        </button>
       </div>
     </div>
   </div>
@@ -64,27 +42,17 @@ export default {
     title: { type: String, required: true },
     time: { type: String, required: true },
     quota_left: { type: Number, required: true },
-    state: { type: String, default: 'ACTIVE' },
-    action: { type: String, default: 'Deactivate' },
   },
-  data() {
-    return {
-      curState: this.state,
-      curAction: this.action,
-    };
-  },
+  inject: ['userId'],
   methods: {
-    toggleState() {
-      if (this.curState === 'ACTIVE') {
-        this.curState = 'INACTIVE';
-        this.curAction = 'Activate';
-      } else {
-        this.curState = 'ACTIVE';
-        this.curAction = 'Deactivate';
-      }
-    },
-    deleteActivity() {
-      // Delet activity
+    /**
+     * @description
+     * Redirect to the activity management page
+     */
+    toActivityManagement() {
+      // eslint-disable-next-line
+      const targetPath = '/activityManagement/user_id=' + this.userId + '/activity_id=' + this.activity_id;
+      this.$router.push(targetPath);
     },
   },
 };

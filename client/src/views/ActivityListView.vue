@@ -16,7 +16,7 @@ import ActivityListTitle from '../components/ActivityList/ActivityListTitle.vue'
 
 const axios = require('axios').default;
 
-const ACTIVITY_INFO_URL = 'http://localhost:4000/getActivityInfo';
+const ACTIVITY_INFO_URL = 'http://localhost:4000/getActivityList';
 
 export default {
   components: {
@@ -25,13 +25,14 @@ export default {
   },
   data() {
     return {
-      user_id: 8,
+      user_id: [],
       ACTIVITY_ID_LIST: [], // The list of activity id of a user
       ACTIVITY_DATA: [], // Stores all the activity information of a user
     };
   },
   provide() {
     return {
+      userId: this.user_id,
       activityIdList: this.ACTIVITY_ID_LIST,
       activityData: this.ACTIVITY_DATA,
     };
@@ -61,30 +62,14 @@ export default {
           return callback();
         });
     },
-    /**
-     * @description
-     * Call functions to load data into local memory
-     * TODO We need to load data into the local memory FIRST and then render the page
-     */
-    renderPage() {
-      const self = this;
-      const myPromise1 = function () {
-        return new Promise((resolve) => {
-          self.loadActivityRecord(() => {
-            resolve();
-          });
-        });
-      };
-      myPromise1()
-        .then(() => {
-          console.log(this.ACTIVITY_ID_LIST);
-          console.log(this.ACTIVITY_DATA);
-        });
-    },
   },
   // lIFE Cycle mounted, will be executed after app setup
   mounted() {
-    this.renderPage();
+    this.loadActivityRecord(() => {});
+  },
+  created() {
+    // get the route parameter 'id' from router
+    this.user_id.push(this.$route.params.user_id);
   },
 };
 </script>
