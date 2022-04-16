@@ -93,8 +93,8 @@ Attributes are list below; Constrains are listed after the attribute
 
   - Database: pickup
   - Table Name: activity_user
-    - activity_id: `INT`, `NOT NULL`, `FOREIGN KEY`
-    - user_id: `INT`, `NOT NULL`, `FOREIGN KEY`
+    - activity_id: `INT`, `NOT NULL`, `FOREIGN KEY`, **ON DELETE CASCADE / ON UPDATE CASCADE**
+    - user_id: `INT`, `NOT NULL`, `FOREIGN KEY`, **ON DELETE CASCADE / ON UPDATE CASCADE**
     - role: `VARCHAR(20)`, `NOT NULL`, value can only be one of the two`[MANAGER, MEMBER]`
   - Table Name: user_info
     - user_id: `INT`, `AUTO_INCREMENT`, `PRIMARY KEY`, `NOT NULL`
@@ -320,7 +320,17 @@ The only extra package used is
     npm install bootstrap --save
     ```
 
+- Vuex
 
+  - Local data management center
+
+  - Install package
+
+    ```shell
+    npm install vuex --save
+    ```
+
+    
 
 
 ### Testing
