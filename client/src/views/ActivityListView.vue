@@ -101,6 +101,7 @@ export default {
   name: 'ActivityList',
   data() {
     return {
+<<<<<<< HEAD
       user_id: 8,
       ACTIVITY_ID_LIST: null,
       // Stores the package sent by the server (all the activity information of a user)
@@ -121,6 +122,36 @@ export default {
           this.ACTIVITY_DATA = response.data[DATA_INDEX];
           this.ACTIVITY_ID_LIST = response.data[ID_LIST_INDEX];
           return callback();
+=======
+      user_id: [],
+      ACTIVITY_DATA: [], // Stores all the activity information of a user
+    };
+  },
+  provide() {
+    return {
+      userId: this.user_id,
+      activityData: this.ACTIVITY_DATA,
+    };
+  },
+  methods: {
+    /**
+     * @description
+     * Loads all the activity information of a user with given user_id
+     * Data is loaded into the local variable ACTIVITY_DATA
+     * @var ID_LIST_INDEX @var DATA_INDEX
+     * Data package is sent in the form: {[ACTIVITY_ID_LIST],[ACTIVITY_DATA]}
+     * @param {*} callback
+     * This callback function is used to pass data from async function
+     */
+    loadActivityRecord() {
+      axios
+        .post(ACTIVITY_INFO_URL, { user_id: this.user_id })
+        .then((response) => {
+          const DATA_INDEX = 0;
+          for (let i = 0; i < response.data[DATA_INDEX].length; i += 1) {
+            this.ACTIVITY_DATA.push(response.data[DATA_INDEX][i]);
+          }
+>>>>>>> 1ebfbd75b3d9358c35ceef756d2c17d6ea52af3f
         });
     },
     renderActivityCard(index) {
@@ -150,7 +181,15 @@ export default {
     },
   },
   mounted() {
+<<<<<<< HEAD
     this.renderPage();
+=======
+    this.loadActivityRecord();
+  },
+  created() {
+    // get the route parameter 'id' from router
+    this.user_id.push(this.$route.params.user_id);
+>>>>>>> 1ebfbd75b3d9358c35ceef756d2c17d6ea52af3f
   },
 };
 </script>

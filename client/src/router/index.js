@@ -3,8 +3,23 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue'),
+    name: 'visitorHome',
+    component: () => import(/* webpackChunkName: "about" */ '../views/VisitorHomeView.vue'),
+  },
+  {
+    path: '/userHome',
+    name: 'userHome',
+    component: () => import(/* webpackChunkName: "about" */ '../views/UserHomeView.vue'),
+  },
+  {
+    path: '/adminConsole',
+    name: 'adminConsole',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminConsoleView.vue'),
+  },
+  {
+    path: '/userManagement',
+    name: 'userManagement',
+    component: () => import(/* webpackChunkName: "about" */ '../views/UserManagementView.vue'),
   },
   {
     path: '/activityCreation',
