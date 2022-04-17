@@ -105,6 +105,9 @@ Attributes are list below; Constrains are listed after the attribute
     - contact_info: `VARCHAR(20)`
     - personal_intro: `VARCHAR(255)`
     - My portrait: Select from given range (NOT IMPLEMENTED)
+    - **identity: `INT`**
+      - **0 for normal user**
+      - **1 for administration user**
   - Table Name: activity_info
     - activity_id: `INT`, `AUTO INCREMENT`, `PRIMARY KEY`, `NOT NULL`
     - title: `VARCHAR(255)`, `NOT NULL`

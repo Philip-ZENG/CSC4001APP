@@ -29,14 +29,6 @@
  * This is an activity card component, used to display information of a specific component
  */
 export default {
-  /**
-   * @var state
-   * Has two value 'ACTIVE' and 'INACTIVE'
-   * Used to notify whether the activity is posted or stored as drafts
-   * @var action
-   * Has two value 'Deactivate' and 'Activate'
-   * Used to post an activity or pull back an activity
-   */
   props: {
     activity_id: { type: Number, required: true },
     title: { type: String, required: true },

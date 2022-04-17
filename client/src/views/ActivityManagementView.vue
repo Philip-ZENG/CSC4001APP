@@ -1,8 +1,6 @@
 <template>
   <section>
-    <div class="home">
-    </div>
-    <management-console
+    <activity-management-console
       v-for="activity in ACTIVITY_INFO"
       :key="activity.activity_id"
       :title="activity.title"
@@ -12,12 +10,12 @@
       :max_capacity="activity.max_capacity"
       :quota_left="activity.quota_left"
       :description="activity.description"
-    ></management-console>
+    ></activity-management-console>
   </section>
 </template>
 
 <script>
-import managementConsole from '../components/ActivityManagement/ManagementConsole.vue';
+import ActivityManagementConsole from '../components/ActivityManagement/ActivityManagementConsole.vue';
 
 const axios = require('axios').default;
 
@@ -30,7 +28,7 @@ const MEMBER_INFO = 'http://localhost:4000/getMemberInfo';
 
 export default {
   components: {
-    'management-console': managementConsole,
+    'activity-management-console': ActivityManagementConsole,
   },
   data() {
     return {
