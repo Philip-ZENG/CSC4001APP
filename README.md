@@ -35,6 +35,8 @@
   
 - Front-end Framework: Vue.js 
   - Version: v3.2.13
+  - Development Server
+    - Vue CLI
   
 - Front-end UI Component Library: Boostrap
   - Version: v5.1.3
@@ -91,8 +93,8 @@ Attributes are list below; Constrains are listed after the attribute
 
   - Database: pickup
   - Table Name: activity_user
-    - activity_id: `INT`, `NOT NULL`, `FOREIGN KEY`
-    - user_id: `INT`, `NOT NULL`, `FOREIGN KEY`
+    - activity_id: `INT`, `NOT NULL`, `FOREIGN KEY`, **ON DELETE CASCADE / ON UPDATE CASCADE**
+    - user_id: `INT`, `NOT NULL`, `FOREIGN KEY`, **ON DELETE CASCADE / ON UPDATE CASCADE**
     - role: `VARCHAR(20)`, `NOT NULL`, value can only be one of the two`[MANAGER, MEMBER]`
   - Table Name: user_info
     - user_id: `INT`, `AUTO_INCREMENT`, `PRIMARY KEY`, `NOT NULL`
@@ -318,7 +320,17 @@ The only extra package used is
     npm install bootstrap --save
     ```
 
+- Vuex
 
+  - Local data management center
+
+  - Install package
+
+    ```shell
+    npm install vuex --save
+    ```
+
+    
 
 
 ### Testing
@@ -337,6 +349,12 @@ The only extra package used is
   - Conduct merge action from the github website
 
 - Pushing command from terminal
+
+  - Check current status
+
+    - ```shell
+      git status
+      ```
 
   - Create a new branch
 
@@ -366,9 +384,15 @@ The only extra package used is
 
   - Try pulling from the repository before pushing
 
+- We can try to write `.gitignore` files to avoid uploading all the module files and we can download module files after pulling from github locally by
 
+  ```shell
+  npm install
+  ```
 
-#### Learning Highlight
+  
+
+### Learning Highlight
 
 - JavaScript Asynchronous function
   - Callback
@@ -385,3 +409,9 @@ The only extra package used is
     - In normal function, `this` refer to vue instance
   - In Promises, `this` does not refer to vue instance
     - Define `const that=this;` before entering a promise and use `that` inside promise, can solve this reference error
+
+
+
+### Documentation
+
+- For VS Code commenting, we use `Better Comments` plug-in
