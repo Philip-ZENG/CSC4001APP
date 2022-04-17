@@ -1,11 +1,18 @@
 import { createStore } from 'vuex';
+import UserManagementModule from './UserManagement/index';
 
 const store = createStore({
+  modules: {
+    userManagement: UserManagementModule,
+  },
   // state is equivalent to data
   state() {
     return {
       user_id: null,
       user_token: null,
+      isLogIn: false,
+      // true means identity is user, false means identity is admin
+      isUser: null,
     };
   },
   // getter is equivalent to computed property
@@ -16,6 +23,12 @@ const store = createStore({
     getUserToken(state) {
       return state.user_token;
     },
+    getIsLogIn(state) {
+      return state.isLogIn;
+    },
+    getIsUser(state) {
+      return state.isUser;
+    },
   },
   // mutation is equivalent to method
   mutations: {
@@ -24,6 +37,15 @@ const store = createStore({
     },
     setUserToken(state, data) {
       state.user_token = data.user_token;
+    },
+    setIsLogIn(state) {
+      state.isLogIn = true;
+    },
+    setIsUser(state, data) {
+      state.isUser = data.isUser;
+    },
+    setIsLogOut(state) {
+      state.isLogIn = false;
     },
   },
   /**
@@ -36,6 +58,15 @@ const store = createStore({
     },
     setUserToken(context, data) {
       context.commit('setUserToken', data);
+    },
+    setIsLogIn(context) {
+      context.commit('setIsLogIn');
+    },
+    setIsUser(context, data) {
+      context.commit('setIsUser', data);
+    },
+    setIsLogOut(context) {
+      context.commit('setIsLogOut');
     },
   },
 });

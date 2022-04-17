@@ -100,7 +100,6 @@ async function pack_activity_info(user_id){
 
   // Get activity list from Promise1
   const activity_id_list = await myPromise1(user_id);
-  response.push(activity_id_list);
 
   // Get activity data from Promise 2
   var activity_data = []; 
