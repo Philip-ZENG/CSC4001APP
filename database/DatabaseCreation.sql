@@ -6,8 +6,8 @@ CREATE TABLE activity_user
     activity_id INT NOT NULL,
     user_id INT NOT NULL,
     role VARCHAR(20) NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES user_info(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (activity_id) REFERENCES activity_info(activity_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY(user_id) REFERENCES user_info(user_id),
+    FOREIGN KEY (activity_id) REFERENCES activity_info(activity_id)
 );
 
 -- User database
@@ -36,6 +36,5 @@ CREATE TABLE activity_info
     max_capacity INT NOT NULL ,
     quota_left INT,
     type VARCHAR(255) NOT NULL ,
-    heat INT,
-    status BIT DEFAULT 1
+    heat INT
 );

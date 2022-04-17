@@ -35,12 +35,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/SettingView.vue'),
   },
   {
-    path: '/activityList/user_id=:user_id',
+    path: '/activityList',
     name: 'activityList',
     component: () => import(/* webpackChunkName: "about" */ '../views/ActivityListView.vue'),
   },
   {
-    path: '/activityManagement/user_id=:user_id/activity_id=:activity_id',
+    path: '/activityManagement',
     name: 'activityManagement',
     component: () => import(/* webpackChunkName: "about" */ '../views/ActivityManagementView.vue'),
   },
